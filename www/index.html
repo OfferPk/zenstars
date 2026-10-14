@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ZenStars ✦ Celestial Logic Puzzle</title>
-  <meta name="description" content="ZenStars: A calm, meditative Star Battle (Queens) celestial grid logic puzzle game. 100% offline casual puzzle.">
-  <meta name="theme-color" content="#070811">
+  <meta name="description" content="ZenStars: A calm, meditative Star Battle celestial grid logic puzzle game. Play offline and find your constellation.">
+  <meta name="theme-color" content="#080b17">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="ZenStars">
@@ -18,164 +18,162 @@
   <div class="cosmos-backdrop" aria-hidden="true"></div>
 
   <div class="app-container">
-    <!-- Header -->
-    <header role="banner">
-      <div class="title-group">
-        <div class="logo-wrap">
-          <span class="logo-star" aria-hidden="true">✦</span>
-          <h1>ZenStars</h1>
-        </div>
-        <div class="level-meta">
-          <span id="level-title">Nova 1: Lyra Spark</span>
-          <button id="pack-badge-btn" class="pack-pill" aria-label="Select Level Pack">Dawn Novas</button>
+    <header class="app-header" role="banner">
+      <div class="brand-lockup">
+        <div class="logo-mark" aria-hidden="true"><span class="logo-star">✦</span></div>
+        <div class="brand-copy">
+          <div class="logo-wrap">
+            <h1>ZenStars</h1>
+            <span class="brand-tag">STAR BATTLE</span>
+          </div>
+          <div class="level-meta">
+            <span id="level-title">Nova 1: Lyra Spark</span>
+            <span class="meta-divider" aria-hidden="true">/</span>
+            <button id="pack-badge-btn" class="pack-pill" aria-label="Select level pack">
+              <span>Dawn Novas</span>
+              <svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" /></svg>
+            </button>
+          </div>
         </div>
       </div>
 
       <nav class="nav-buttons" aria-label="Game controls">
-        <button id="btn-sound" class="icon-btn" aria-label="Toggle sound" title="Sound: On">🔔</button>
-        <button id="btn-rules" class="icon-btn" aria-label="How to play" title="Rules">❓</button>
-        <button id="btn-levels" class="icon-btn" aria-label="Level select" title="All Levels">🗺️</button>
+        <button id="btn-sound" class="icon-btn" aria-label="Toggle sound" aria-pressed="true" title="Sound on">
+          <svg class="sound-on" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="M16 9a5 5 0 0 1 0 6M18.5 6.5a9 9 0 0 1 0 11"/></svg>
+          <svg class="sound-off" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="m17 9 5 6m0-6-5 6"/></svg>
+        </button>
+        <button id="btn-rules" class="icon-btn" aria-label="How to play" title="How to play">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.3 2.3 0 1 1 3.9 1.7c-1 .9-1.7 1.2-1.7 2.6M12 17h.01"/></svg>
+        </button>
+        <button id="btn-levels" class="icon-btn" aria-label="Level select" title="Choose a level">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+        </button>
       </nav>
     </header>
 
-    <!-- Quota & Star Count Banner -->
-    <section class="rule-banner" aria-live="polite">
-      <div>
-        Rule: Place <span id="stars-quota" class="rule-quota">1 Star</span> per row, column & zone
+    <section class="rule-banner" aria-live="polite" aria-label="Puzzle objective and progress">
+      <div class="rule-copy">
+        <span class="objective-mark" aria-hidden="true">✦</span>
+        <div>
+          <span class="eyebrow">THE OBJECTIVE</span>
+          <p>Place <span id="stars-quota" class="rule-quota">1 Star</span> in every row, column &amp; constellation</p>
+        </div>
       </div>
       <div class="quota-counter">
-        Stars: <span id="stars-placed">0</span> / <span id="stars-total">5</span>
+        <div class="quota-topline"><span>STARS PLACED</span><strong><span id="stars-placed">0</span><span class="quota-divider">/</span><span id="stars-total">5</span></strong></div>
+        <div id="stars-progress" class="progress-track" role="progressbar" aria-label="Stars placed" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+          <span id="stars-progress-fill" class="progress-fill"></span>
+        </div>
       </div>
     </section>
 
-    <!-- Board Area -->
-    <main class="board-wrapper" role="main">
-      <div id="board" class="board-container" role="grid" aria-label="Celestial Star Grid"></div>
+    <main class="play-layout" role="main">
+      <section class="board-panel" aria-label="Current puzzle">
+        <div class="board-topline">
+          <span class="board-caption"><span class="live-dot" aria-hidden="true"></span>CONSTELLATION GRID</span>
+          <span id="board-size" class="board-size">5 × 5</span>
+        </div>
+        <div class="board-wrapper">
+          <div id="board" class="board-container" role="grid" aria-label="Celestial Star Grid"></div>
+        </div>
+      </section>
+
+      <aside class="game-rail" aria-label="Puzzle tools and tips">
+        <section class="rail-card mode-panel">
+          <div class="rail-heading">
+            <span class="section-kicker">MARK YOUR CELLS</span>
+            <span class="keyboard-hint" aria-hidden="true">1 · 2 · 3</span>
+          </div>
+          <div class="tool-mode-bar" role="radiogroup" aria-label="Input mode">
+            <button id="mode-cycle" class="mode-pill active" role="radio" aria-checked="true" aria-label="Cycle empty, dot, star">
+              <span class="mode-symbol cycle-symbol" aria-hidden="true">↻</span><span>Cycle</span>
+            </button>
+            <button id="mode-star" class="mode-pill" role="radio" aria-checked="false" aria-label="Star placement mode">
+              <span class="mode-symbol star-symbol" aria-hidden="true">✦</span><span>Star</span>
+            </button>
+            <button id="mode-dot" class="mode-pill" role="radio" aria-checked="false" aria-label="Dot eliminate mode">
+              <span class="mode-symbol dot-symbol" aria-hidden="true">•</span><span>Dot</span>
+            </button>
+          </div>
+          <p id="mode-help" class="mode-help">Tap a cell to cycle through empty, ruled out, and star.</p>
+        </section>
+
+        <section class="rail-card tip-panel">
+          <div class="tip-icon" aria-hidden="true">✧</div>
+          <div>
+            <span class="section-kicker">A MOMENT OF CLARITY</span>
+            <p>Stars can’t touch—even diagonally. A placed star marks its neighboring cells for you.</p>
+          </div>
+        </section>
+
+        <footer class="control-bar" role="contentinfo">
+          <button id="btn-undo" class="action-btn" aria-label="Undo move" disabled>
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h9a7 7 0 0 1 0 14h-2"/></svg>
+            <span>Undo</span>
+          </button>
+          <button id="btn-hint" class="action-btn" aria-label="Deduction hint">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18h6m-5 3h4m-2-20a7 7 0 0 0-4 12.7c.7.5 1 1.1 1 1.8h6c0-.7.3-1.3 1-1.8A7 7 0 0 0 12 1Z"/><path d="M12 5v4m-2-2h4"/></svg>
+            <span>Hint</span>
+          </button>
+          <button id="btn-reset" class="action-btn" aria-label="Clear board">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
+            <span>Clear</span>
+          </button>
+        </footer>
+      </aside>
     </main>
-
-    <!-- Placement Mode Pills -->
-    <div class="tool-mode-bar" role="radiogroup" aria-label="Input Mode">
-      <button id="mode-cycle" class="mode-pill active" role="radio" aria-checked="true" aria-label="Cycle Empty, Dot, Star">
-        <span>🔄</span> Cycle
-      </button>
-      <button id="mode-star" class="mode-pill" role="radio" aria-checked="false" aria-label="Star placement mode">
-        <span>✦</span> Star
-      </button>
-      <button id="mode-dot" class="mode-pill" role="radio" aria-checked="false" aria-label="Dot eliminate mode">
-        <span>•</span> Dot
-      </button>
-    </div>
-
-    <!-- Bottom Actions -->
-    <footer class="control-bar" role="contentinfo">
-      <button id="btn-undo" class="action-btn" aria-label="Undo move">
-        <span>↩️</span> Undo
-      </button>
-      <button id="btn-hint" class="action-btn" aria-label="Deduction hint">
-        <span>💡</span> Hint
-      </button>
-      <button id="btn-reset" class="action-btn" aria-label="Restart level">
-        <span>🔄</span> Clear
-      </button>
-    </footer>
   </div>
 
-  <!-- Toast Notification -->
   <div id="toast" class="toast-container" role="status" aria-live="assertive"></div>
 
-  <!-- Victory Modal -->
   <div id="modal-victory" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="victory-title">
-    <div class="modal-card">
+    <div class="modal-card victory-card">
       <div class="victory-content">
         <div class="victory-icon" aria-hidden="true">✦</div>
-        <h3 id="victory-title">Constellation Harmonized!</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">The celestial stars shine in perfect equilibrium.</p>
+        <span class="section-kicker">A NEW CONSTELLATION FOUND</span>
+        <h2 id="victory-title">Constellation Harmonized!</h2>
+        <p class="victory-copy">The celestial stars shine in perfect equilibrium.</p>
 
         <div class="victory-stats">
-          <div class="stat-item">
-            <span id="stat-moves" class="stat-val">0</span>
-            <span class="stat-lbl">MOVES</span>
-          </div>
-          <div class="stat-item">
-            <span id="stat-time" class="stat-val">0:00</span>
-            <span class="stat-lbl">TIME</span>
-          </div>
+          <div class="stat-item"><span id="stat-moves" class="stat-val">0</span><span class="stat-lbl">MOVES</span></div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item"><span id="stat-time" class="stat-val">0:00</span><span class="stat-lbl">TIME</span></div>
         </div>
 
-        <button id="btn-next-level" class="action-btn primary" style="width: 100%; padding: 12px; font-size: 1rem;">
-          Next Constellation ➔
+        <button id="btn-next-level" class="action-btn primary modal-primary">
+          <span>Next Constellation</span><span aria-hidden="true">→</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Level Select Modal -->
   <div id="modal-levels" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="levels-title">
     <div class="modal-card">
       <div class="modal-header">
-        <h2 id="levels-title">Star Systems</h2>
+        <div><span class="section-kicker">EXPLORE THE COSMOS</span><h2 id="levels-title">Star Systems</h2></div>
         <button class="modal-close" id="btn-close-levels" aria-label="Close dialog">&times;</button>
       </div>
-
-      <div class="pack-tabs" id="pack-tabs" role="tablist">
-        <!-- Generated pack tabs -->
-      </div>
-
-      <div class="level-grid" id="level-grid">
-        <!-- Generated level chips -->
-      </div>
+      <div class="pack-tabs" id="pack-tabs" role="tablist" aria-label="Level packs"></div>
+      <div class="level-grid" id="level-grid"></div>
     </div>
   </div>
 
-  <!-- Rules / Tutorial Modal -->
   <div id="modal-rules" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rules-title">
     <div class="modal-card">
       <div class="modal-header">
-        <h2 id="rules-title">How to Play</h2>
+        <div><span class="section-kicker">YOUR FIELD GUIDE</span><h2 id="rules-title">How to Play</h2></div>
         <button class="modal-close" id="btn-close-rules" aria-label="Close dialog">&times;</button>
       </div>
-
       <div class="rules-body">
-        <div class="rule-item">
-          <div class="rule-icon">✦</div>
-          <div class="rule-text">
-            <h4>Exact Quota</h4>
-            <p>Every row, column, and colored constellation zone must contain the exact required number of stars (usually 1).</p>
-          </div>
-        </div>
-
-        <div class="rule-item">
-          <div class="rule-icon">🚫</div>
-          <div class="rule-text">
-            <h4>No Touching Stars</h4>
-            <p>Stars cannot be adjacent to each other in any direction—horizontally, vertically, or diagonally (King's move).</p>
-          </div>
-        </div>
-
-        <div class="rule-item">
-          <div class="rule-icon">👆</div>
-          <div class="rule-text">
-            <h4>Cell Controls</h4>
-            <p>Tap a cell to cycle: <strong>Empty ➔ Dot (Ruled Out) ➔ Star ➔ Empty</strong>. You can also drag across cells to quickly paint dots!</p>
-          </div>
-        </div>
-
-        <div class="rule-item">
-          <div class="rule-icon">💡</div>
-          <div class="rule-text">
-            <h4>Mindful Assistance</h4>
-            <p>Use Hint whenever you seek deduction inspiration, and freely undo any step with unlimited undo.</p>
-          </div>
-        </div>
+        <div class="rule-item"><div class="rule-icon" aria-hidden="true">✦</div><div class="rule-text"><h3>Exact quota</h3><p>Every row, column, and colored constellation zone must contain the exact required number of stars.</p></div></div>
+        <div class="rule-item"><div class="rule-icon" aria-hidden="true">⌁</div><div class="rule-text"><h3>No touching</h3><p>Stars can’t be adjacent horizontally, vertically, or diagonally.</p></div></div>
+        <div class="rule-item"><div class="rule-icon" aria-hidden="true">↻</div><div class="rule-text"><h3>Mark as you go</h3><p>Cycle through empty, ruled-out, and star—or choose a mode and drag to mark several cells.</p></div></div>
+        <div class="rule-item"><div class="rule-icon" aria-hidden="true">✧</div><div class="rule-text"><h3>Take a hint</h3><p>Use Hint for a gentle deduction, or undo any move whenever you like.</p></div></div>
       </div>
-
-      <button id="btn-close-rules-btn" class="action-btn primary" style="width: 100%; margin-top: 14px;">
-        Got It, Let's Play
-      </button>
+      <button id="btn-close-rules-btn" class="action-btn primary modal-primary">Got it, let’s play</button>
     </div>
   </div>
 
-  <!-- Application Scripts -->
   <script src="levels.js"></script>
   <script src="star-engine.js"></script>
   <script src="audio.js"></script>
