@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="spaceGrad" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#181c3b" />
+      <stop offset="60%" stop-color="#0c0e20" />
+      <stop offset="100%" stop-color="#05060d" />
+    </radialGradient>
+    <radialGradient id="starGrad" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="30%" stop-color="#fde047" />
+      <stop offset="70%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </radialGradient>
+    <radialGradient id="nebulaGrad" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35" />
+      <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <filter id="celestialGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur1" />
+      <feGaussianBlur stdDeviation="6" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Deep Cosmos Background -->
+  <rect width="512" height="512" rx="112" fill="url(#spaceGrad)" />
+  <rect width="512" height="512" rx="112" fill="url(#nebulaGrad)" />
+
+  <!-- Constellation Geometric Grid / Halo -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="6 8" opacity="0.3" />
+  <circle cx="256" cy="256" r="130" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.4" />
+
+  <!-- Constellation Nodes & Connecting Rays -->
+  <line x1="120" y1="180" x2="256" y2="100" stroke="#a78bfa" stroke-width="2" opacity="0.4" />
+  <line x1="256" y1="100" x2="392" y2="180" stroke="#a78bfa" stroke-width="2" opacity="0.4" />
+  <line x1="392" y1="180" x2="350" y2="350" stroke="#a78bfa" stroke-width="2" opacity="0.4" />
+  <line x1="350" y1="350" x2="162" y2="350" stroke="#a78bfa" stroke-width="2" opacity="0.4" />
+  <line x1="162" y1="350" x2="120" y2="180" stroke="#a78bfa" stroke-width="2" opacity="0.4" />
+
+  <!-- Minor Stars -->
+  <circle cx="120" cy="180" r="6" fill="#c4b5fd" filter="url(#celestialGlow)" />
+  <circle cx="256" cy="100" r="7" fill="#38bdf8" filter="url(#celestialGlow)" />
+  <circle cx="392" cy="180" r="6" fill="#c4b5fd" filter="url(#celestialGlow)" />
+  <circle cx="350" cy="350" r="7" fill="#38bdf8" filter="url(#celestialGlow)" />
+  <circle cx="162" cy="350" r="6" fill="#c4b5fd" filter="url(#celestialGlow)" />
+
+  <!-- Central Radiant Celestial Star (8-pointed) -->
+  <path d="M 256 90 Q 256 220 190 256 Q 256 220 256 90 Z" fill="url(#starGrad)" filter="url(#celestialGlow)" />
+  <path d="M 256 422 Q 256 292 190 256 Q 256 292 256 422 Z" fill="url(#starGrad)" filter="url(#celestialGlow)" />
+  <path d="M 90 256 Q 220 256 256 190 Q 220 256 90 256 Z" fill="url(#starGrad)" filter="url(#celestialGlow)" />
+  <path d="M 422 256 Q 292 256 256 190 Q 292 256 422 256 Z" fill="url(#starGrad)" filter="url(#celestialGlow)" />
+
+  <!-- Main 4-point Diamond Star Center -->
+  <path d="M 256 70 Q 256 256 70 256 Q 256 256 256 442 Q 256 256 442 256 Q 256 256 256 70 Z" 
+        fill="url(#starGrad)" filter="url(#celestialGlow)" />
+
+  <!-- Secondary Diagonal Star Flare -->
+  <path d="M 256 130 Q 256 256 130 256 Q 256 256 256 382 Q 256 256 382 256 Q 256 256 256 130 Z" 
+        fill="#ffffff" transform="rotate(45 256 256)" opacity="0.9" filter="url(#celestialGlow)" />
+
+  <!-- Radiant Core Sparkle -->
+  <circle cx="256" cy="256" r="16" fill="#ffffff" filter="url(#celestialGlow)" />
+</svg>

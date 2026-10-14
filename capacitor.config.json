@@ -1,0 +1,9 @@
+{
+  "appId": "pk.offer.zenstars",
+  "appName": "ZenStars",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "backgroundColor": "#0b0c16"
+  }
+}
