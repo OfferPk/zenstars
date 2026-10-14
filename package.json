@@ -1,0 +1,30 @@
+{
+  "name": "zenstars",
+  "version": "1.0.0",
+  "description": "ZenStars: sleek, calming offline Star Battle celestial grid logic puzzle game",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "node --test test/engine.test.js",
+    "build": "node scripts/build.js",
+    "cap:add": "cap add android",
+    "cap:sync": "cap sync android"
+  },
+  "keywords": [
+    "star-battle",
+    "queens",
+    "two-not-touch",
+    "puzzle",
+    "offline",
+    "capacitor",
+    "pwa",
+    "vanilla-js",
+    "logic-game"
+  ],
+  "author": "OfferPk",
+  "license": "MIT",
+  "devDependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  }
+}

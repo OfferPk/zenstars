@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>ZenStars ✦ Celestial Logic Puzzle</title>
+  <meta name="description" content="ZenStars: A calm, meditative Star Battle (Queens) celestial grid logic puzzle game. 100% offline casual puzzle.">
+  <meta name="theme-color" content="#070811">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ZenStars">
+
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="cosmos-backdrop" aria-hidden="true"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header role="banner">
+      <div class="title-group">
+        <div class="logo-wrap">
+          <span class="logo-star" aria-hidden="true">✦</span>
+          <h1>ZenStars</h1>
+        </div>
+        <div class="level-meta">
+          <span id="level-title">Nova 1: Lyra Spark</span>
+          <button id="pack-badge-btn" class="pack-pill" aria-label="Select Level Pack">Dawn Novas</button>
+        </div>
+      </div>
+
+      <nav class="nav-buttons" aria-label="Game controls">
+        <button id="btn-sound" class="icon-btn" aria-label="Toggle sound" title="Sound: On">🔔</button>
+        <button id="btn-rules" class="icon-btn" aria-label="How to play" title="Rules">❓</button>
+        <button id="btn-levels" class="icon-btn" aria-label="Level select" title="All Levels">🗺️</button>
+      </nav>
+    </header>
+
+    <!-- Quota & Star Count Banner -->
+    <section class="rule-banner" aria-live="polite">
+      <div>
+        Rule: Place <span id="stars-quota" class="rule-quota">1 Star</span> per row, column & zone
+      </div>
+      <div class="quota-counter">
+        Stars: <span id="stars-placed">0</span> / <span id="stars-total">5</span>
+      </div>
+    </section>
+
+    <!-- Board Area -->
+    <main class="board-wrapper" role="main">
+      <div id="board" class="board-container" role="grid" aria-label="Celestial Star Grid"></div>
+    </main>
+
+    <!-- Placement Mode Pills -->
+    <div class="tool-mode-bar" role="radiogroup" aria-label="Input Mode">
+      <button id="mode-cycle" class="mode-pill active" role="radio" aria-checked="true" aria-label="Cycle Empty, Dot, Star">
+        <span>🔄</span> Cycle
+      </button>
+      <button id="mode-star" class="mode-pill" role="radio" aria-checked="false" aria-label="Star placement mode">
+        <span>✦</span> Star
+      </button>
+      <button id="mode-dot" class="mode-pill" role="radio" aria-checked="false" aria-label="Dot eliminate mode">
+        <span>•</span> Dot
+      </button>
+    </div>
+
+    <!-- Bottom Actions -->
+    <footer class="control-bar" role="contentinfo">
+      <button id="btn-undo" class="action-btn" aria-label="Undo move">
+        <span>↩️</span> Undo
+      </button>
+      <button id="btn-hint" class="action-btn" aria-label="Deduction hint">
+        <span>💡</span> Hint
+      </button>
+      <button id="btn-reset" class="action-btn" aria-label="Restart level">
+        <span>🔄</span> Clear
+      </button>
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast-container" role="status" aria-live="assertive"></div>
+
+  <!-- Victory Modal -->
+  <div id="modal-victory" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+    <div class="modal-card">
+      <div class="victory-content">
+        <div class="victory-icon" aria-hidden="true">✦</div>
+        <h3 id="victory-title">Constellation Harmonized!</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">The celestial stars shine in perfect equilibrium.</p>
+
+        <div class="victory-stats">
+          <div class="stat-item">
+            <span id="stat-moves" class="stat-val">0</span>
+            <span class="stat-lbl">MOVES</span>
+          </div>
+          <div class="stat-item">
+            <span id="stat-time" class="stat-val">0:00</span>
+            <span class="stat-lbl">TIME</span>
+          </div>
+        </div>
+
+        <button id="btn-next-level" class="action-btn primary" style="width: 100%; padding: 12px; font-size: 1rem;">
+          Next Constellation ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level Select Modal -->
+  <div id="modal-levels" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="levels-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="levels-title">Star Systems</h2>
+        <button class="modal-close" id="btn-close-levels" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="pack-tabs" id="pack-tabs" role="tablist">
+        <!-- Generated pack tabs -->
+      </div>
+
+      <div class="level-grid" id="level-grid">
+        <!-- Generated level chips -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Rules / Tutorial Modal -->
+  <div id="modal-rules" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rules-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="rules-title">How to Play</h2>
+        <button class="modal-close" id="btn-close-rules" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="rules-body">
+        <div class="rule-item">
+          <div class="rule-icon">✦</div>
+          <div class="rule-text">
+            <h4>Exact Quota</h4>
+            <p>Every row, column, and colored constellation zone must contain the exact required number of stars (usually 1).</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-icon">🚫</div>
+          <div class="rule-text">
+            <h4>No Touching Stars</h4>
+            <p>Stars cannot be adjacent to each other in any direction—horizontally, vertically, or diagonally (King's move).</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-icon">👆</div>
+          <div class="rule-text">
+            <h4>Cell Controls</h4>
+            <p>Tap a cell to cycle: <strong>Empty ➔ Dot (Ruled Out) ➔ Star ➔ Empty</strong>. You can also drag across cells to quickly paint dots!</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-icon">💡</div>
+          <div class="rule-text">
+            <h4>Mindful Assistance</h4>
+            <p>Use Hint whenever you seek deduction inspiration, and freely undo any step with unlimited undo.</p>
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-close-rules-btn" class="action-btn primary" style="width: 100%; margin-top: 14px;">
+        Got It, Let's Play
+      </button>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="levels.js"></script>
+  <script src="star-engine.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
