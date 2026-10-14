@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const starsPlacedEl = document.getElementById('stars-placed');
   const starsTotalEl = document.getElementById('stars-total');
   const starsQuotaEl = document.getElementById('stars-quota');
+  const starsProgressEl = document.getElementById('stars-progress');
+  const starsProgressFillEl = document.getElementById('stars-progress-fill');
+  const boardSizeEl = document.getElementById('board-size');
 
   const btnSound = document.getElementById('btn-sound');
   const btnRules = document.getElementById('btn-rules');
@@ -55,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modeCycleBtn = document.getElementById('mode-cycle');
   const modeStarBtn = document.getElementById('mode-star');
   const modeDotBtn = document.getElementById('mode-dot');
+  const modeHelpEl = document.getElementById('mode-help');
 
   const toastEl = document.getElementById('toast');
   const modalVictory = document.getElementById('modal-victory');
@@ -74,8 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Sound button UI
   function updateSoundUI() {
     const on = audio.isSoundEnabled();
-    btnSound.textContent = on ? '🔔' : '🔕';
-    btnSound.title = on ? 'Sound: On' : 'Sound: Muted';
+    btnSound.classList.toggle('is-muted', !on);
+    btnSound.setAttribute('aria-pressed', String(on));
+    btnSound.setAttribute('aria-label', on ? 'Mute sound' : 'Turn sound on');
+    btnSound.title = on ? 'Sound on' : 'Sound off';
   }
   updateSoundUI();
 
@@ -120,9 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update Header
     levelTitleEl.textContent = `Level ${currentLevelData.id}: ${currentLevelData.name}`;
-    packBadgeBtn.textContent = currentLevelData.packName;
+    packBadgeBtn.querySelector('span').textContent = currentLevelData.packName;
     starsQuotaEl.textContent = `${currentLevelData.starsPerUnit} Star${currentLevelData.starsPerUnit > 1 ? 's' : ''}`;
     starsTotalEl.textContent = String(engine.targetStars);
+    boardSizeEl.textContent = `${engine.size} × ${engine.size}`;
+    starsProgressEl.setAttribute('aria-valuemax', String(engine.targetStars));
 
     startTimer();
     renderBoard();
@@ -138,10 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
     boardEl.innerHTML = '';
     const size = engine.size;
 
-    // Calculate maximum board size fitting viewport
-    const viewportW = Math.min(window.innerWidth - 36, 480);
-    const viewportH = Math.min(window.innerHeight - 240, 480);
-    const boardDimension = Math.max(260, Math.min(viewportW, viewportH));
+    // Leave room for the responsive panel gutters so the grid stays square.
+    const compactLayout = window.innerWidth <= 900;
+    const viewportW = Math.min(window.innerWidth - (compactLayout ? 56 : 36), 560);
+    const viewportH = Math.min(window.innerHeight - 240, 560);
+    const boardDimension = Math.max(220, Math.floor(Math.min(viewportW, viewportH)));
 
     boardEl.style.width = `${boardDimension}px`;
     boardEl.style.height = `${boardDimension}px`;
@@ -197,6 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateStatus() {
     const totalPlaced = engine.getTotalStars();
     starsPlacedEl.textContent = String(totalPlaced);
+    const progress = Math.min(100, (totalPlaced / engine.targetStars) * 100);
+    starsProgressFillEl.style.width = `${progress}%`;
+    starsProgressEl.setAttribute('aria-valuenow', String(totalPlaced));
+    btnUndo.disabled = engine.history.length === 0;
 
     if (totalPlaced === engine.targetStars) {
       starsPlacedEl.className = 'quota-satisfied';
@@ -340,6 +353,11 @@ document.addEventListener('DOMContentLoaded', () => {
     modeCycleBtn.setAttribute('aria-checked', mode === 'cycle');
     modeStarBtn.setAttribute('aria-checked', mode === 'star');
     modeDotBtn.setAttribute('aria-checked', mode === 'dot');
+    modeHelpEl.textContent = {
+      cycle: 'Tap a cell to cycle through empty, ruled out, and star.',
+      star: 'Tap a cell to place a star or remove one already there.',
+      dot: 'Tap cells to mark spots you have ruled out.'
+    }[mode];
   }
 
   modeCycleBtn.addEventListener('click', () => setMode('cycle'));
